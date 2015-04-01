@@ -174,8 +174,16 @@ id RLMValidatedObjectForProperty(id obj, RLMProperty *prop, RLMSchema *schema) {
                 [objects addObject:[[objSchema.objectClass alloc] initWithObject:el]];
             }
             return objects;
+        }else if (prop.type ==RLMPropertyTypeDouble&&[obj isKindOfClass:[NSString class]]){
+            return @([obj doubleValue]);
+        }else if (prop.type ==RLMPropertyTypeFloat&&[obj isKindOfClass:[NSString class]]){
+            return @([obj floatValue]);
+        }else if (prop.type ==RLMPropertyTypeBool&&[obj isKindOfClass:[NSString class]]){
+            return @([obj boolValue]);
+        }else if (prop.type ==RLMPropertyTypeInt&&[obj isKindOfClass:[NSString class]]){
+            return @([obj integerValue]);
         }
-
+        
         // if not a literal throw
         NSString *message = [NSString stringWithFormat:@"Invalid value '%@' for property '%@'", obj ?: @"nil", prop.name];
         @throw RLMException(message);
