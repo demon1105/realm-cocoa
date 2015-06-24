@@ -75,6 +75,14 @@ static id RLMValidatedObjectForProperty(id obj, RLMProperty *prop, RLMSchema *sc
         return objects;
     }
 
+    }else if (prop.type==RLMPropertyTypeString) {
+        return @"";
+    }else if (prop.type==RLMPropertyTypeFloat||
+              prop.type==RLMPropertyTypeDouble||
+              prop.type==RLMPropertyTypeBool||
+              prop.type==RLMPropertyTypeInt){
+        return @(0);
+    }
     // if not convertible to prop throw
     @throw RLMException([NSString stringWithFormat:@"Invalid value '%@' for property '%@'", obj, prop.name]);
 }
